@@ -1,0 +1,29 @@
+ion-item {
+    --border-radius: 5px;
+}
+
+ion-item.custom {
+    margin: 0;
+    position: relative;
+}
+
+.image-collaborator {
+    margin-top: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.image-collaborator-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px white solid
+}
+
+ion-accordion-group {
+    margin: 15px;
+    --border-radius: 5px;
+}
