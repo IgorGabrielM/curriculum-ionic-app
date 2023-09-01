@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    setTimeout(() => this.loadColaborator(), 500)
+    setTimeout(() => this.loadColaborator(), 5000)
   }
 
   loadColaborator() {
