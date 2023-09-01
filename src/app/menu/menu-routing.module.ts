@@ -9,11 +9,16 @@ const routes: Routes = [
     component: MenuPage,
     children: [
       {
-        path: 'collaborator',
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+      },
+      {
+        path: 'home/collaborator',
         loadChildren: () => import('./collaborator/collaborator.module').then(m => m.CollaboratorPageModule)
       }
     ]
-  }
+  },
+
 ];
 
 @NgModule({

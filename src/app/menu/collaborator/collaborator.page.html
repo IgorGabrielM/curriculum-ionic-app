@@ -12,57 +12,158 @@
     <ion-spinner color="primary"></ion-spinner>
   </div>
 
-
-  <ion-list *ngIf="!isLoading" class="bg-transparent">
-    <div>
-      <ion-item class="custom" slot="header" color="transparent">
+  <div class="content">
+    <ion-list *ngIf="!isLoading" class="bg-transparent">
+      <div class="item-collaborator">
         <div class="image-collaborator">
           <ion-img class="image-collaborator-img"
-            src="https://img.freepik.com/fotos-premium/pessoa-de-visao-frontal-com-cabelo-curto_23-2148749599.jpg"
+            src="https://img.freepik.com/fotos-gratis/vista-frontal-do-homem-bonito_23-2148780802.jpg"
             alt="Imagem do colaborador"></ion-img>
         </div>
 
-        <div class="mt-24 h-32 flex justify-center items-center w-full bg-white">
-          <div class="text-black">
+        <div class="item-collaborator-data mt-20 h-32 flex justify-center items-center w-full bg-gray-100  rounded-md">
+          <div class="text-black mt-2 flex flex-col justify-center items-center">
             <ion-label class="font-bold">{{ sections[0].cardItems[0].data.employeeName }}</ion-label>
             <ion-label>{{ sections[0].cardItems[0].data.jobName }}</ion-label>
           </div>
         </div>
-      </ion-item>
-    </div>
+      </div>
 
-    <div>
-      <ion-accordion-group>
-        <ion-accordion value="first" toggleIcon="caret-down" toggleIconSlot="start">
-          <ion-item slot="header" color="light">
-            <ion-label>Dados de identificação</ion-label>
-          </ion-item>
-          <div class="ion-padding flex flex-col mx-4 mb-2" slot="content">
-            <ion-label class="text-slate-700 mt-1">Admissão na empresa</ion-label>
-            <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.companyAdmissionDate }}</ion-label>
+      <div>
+        <ion-accordion-group [value]="sections[0].expanded ? 'personal-data' : null">
+          <ion-accordion value="personal-data" toggleIcon="caret-down" toggleIconSlot="start">
+            <ion-item slot="header" color="light">
+              <ion-label>{{ sections[0].name }}</ion-label>
+            </ion-item>
+            <div class="ion-padding flex flex-col mx-4 mb-2" slot="content">
+              <ion-label class="text-slate-700 mt-1">Admissão na empresa</ion-label>
+              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.companyAdmissionDate
+                }}</ion-label>
 
-            <ion-label class="text-slate-700 mt-1">Data de nascimento</ion-label>
-            <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.birthDate }}</ion-label>
+              <ion-label class="text-slate-700 mt-1">Data de nascimento</ion-label>
+              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.birthDate }}</ion-label>
 
-            <ion-label class="text-slate-700 mt-1">Celular</ion-label>
-            <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.cellphoneNumber }}</ion-label>
+              <ion-label class="text-slate-700 mt-1">Celular</ion-label>
+              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.cellphoneNumber }}</ion-label>
 
-            <ion-label class="text-slate-700 mt-1">Email</ion-label>
-            <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.email }}</ion-label>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
-    </div>
-
-  </ion-list>
+              <ion-label class="text-slate-700 mt-1">Email</ion-label>
+              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.email }}</ion-label>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
 
 
-  <!--     <ion-accordion-group>
-      <ion-accordion *ngFor="let section of sections; let i = index" [value]="i">
-        <ion-item slot="header" color="light">
-          <ion-label>{{ section.cardItems[0].data.employeeName }}</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">First Content</div>
-      </ion-accordion>
-    </ion-accordion-group> -->
+        <ion-accordion-group [value]="sections[1].expanded ? 'course' : null">
+          <ion-accordion value="course" toggleIcon="caret-down" toggleIconSlot="start">
+            <ion-item slot="header" color="light">
+              <ion-label>{{ sections[1].name }}</ion-label>
+            </ion-item>
+            <div *ngFor="let course of sections[1].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
+              slot="content">
+              <ion-item>
+                <div class="my-2">
+                  <ion-label class="text-slate-700 mt-1">Nome do curso</ion-label>
+                  <ion-label style="white-space: normal;" class="text-black font-bold">{{ course.courseName
+                    }}</ion-label>
+
+                  <ion-label class="text-slate-700 mt-1">Entidade</ion-label>
+                  <ion-label class="text-black font-bold">{{ course.entity }}</ion-label>
+
+                  <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                  <ion-label class="text-black font-bold">{{ course.period }}</ion-label>
+                </div>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-accordion-group [value]="sections[2].expanded ? 'academicEducation' : null">
+          <ion-accordion value="academicEducation" toggleIcon="caret-down" toggleIconSlot="start">
+            <ion-item slot="header" color="light">
+              <ion-label>{{ sections[2].name }}</ion-label>
+            </ion-item>
+            <div *ngFor="let academicEducation of sections[2].cardItems[0].data"
+              class="ion-padding flex flex-col mx-4 my-2" slot="content">
+              <ion-item>
+                <div class="my-2">
+                  <div *ngIf="academicEducation.course">
+                    <ion-label class="text-slate-700 mt-1">Curso</ion-label>
+                    <ion-label style="white-space: normal;" class="text-black font-bold">{{ academicEducation.course
+                      }}</ion-label>
+                  </div>
+
+                  <div *ngIf="academicEducation.educationLevel">
+                    <ion-label class="text-slate-700 mt-1">Nível</ion-label>
+                    <ion-label class="text-black font-bold">{{ academicEducation.educationLevel }}</ion-label>
+                  </div>
+
+                  <div *ngIf="academicEducation.local">
+                    <ion-label class="text-slate-700 mt-1">Local</ion-label>
+                    <ion-label style="white-space: normal;" class="text-black font-bold">{{ academicEducation.local
+                      }}</ion-label>
+                  </div>
+
+                  <div *ngIf="academicEducation.period">
+                    <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                    <ion-label class="text-black font-bold">{{ academicEducation.period }}</ion-label>
+                  </div>
+                </div>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-accordion-group [value]="sections[3].expanded ? 'lenguage' : null">
+          <ion-accordion value="lenguage" toggleIcon="caret-down" toggleIconSlot="start">
+            <ion-item slot="header" color="light">
+              <ion-label>{{ sections[3].name }}</ion-label>
+            </ion-item>
+            <div *ngFor="let language of sections[3].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
+              slot="content">
+              <ion-item>
+                <div class="my-2">
+                  <ion-label class="text-slate-700 mt-1">Língua</ion-label>
+                  <ion-label class="text-black font-bold">{{ language.language }}</ion-label>
+
+                  <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                  <ion-label class="text-black font-bold">{{ language.period }}</ion-label>
+
+                  <ion-label class="text-slate-700 mt-1">Status</ion-label>
+                  <ion-label class="text-black font-bold"
+                    [color]="language.status === 'Completo' ? 'success' : 'dark'">{{
+                    language.status }}</ion-label>
+                </div>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-accordion-group [value]="sections[4].expanded ? 'historic' : null">
+          <ion-accordion value="historic" toggleIcon="caret-down" toggleIconSlot="start">
+            <ion-item slot="header" color="light">
+              <ion-label>{{ sections[4].name }}</ion-label>
+            </ion-item>
+            <div *ngFor="let historic of sections[4].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
+              slot="content">
+              <ion-item>
+                <div class="my-2">
+                  <div *ngIf="historic.company">
+                    <ion-label class="text-slate-700 mt-1">Empresa</ion-label>
+                    <ion-label class="text-black font-bold">{{ historic.company }}</ion-label>
+                  </div>
+
+                  <ion-label class="text-slate-700 mt-1">Cargo</ion-label>
+                  <ion-label class="text-black font-bold">{{ historic.job }}</ion-label>
+
+                  <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                  <ion-label class="text-black font-bold">{{
+                    historic.period }}</ion-label>
+                </div>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>

@@ -1,17 +1,30 @@
+.content {
+    margin: 0;
+    padding: 0;
+    background-image: url('https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-virtual-background-_Tcjok-d9b4.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 18vh;
+}
+
 ion-item {
     --border-radius: 5px;
 }
 
-ion-item.custom {
-    margin: 0;
-    position: relative;
+.item-collaborator {
+    margin: 15px;
+
+    .item-collaborator-data {
+        box-shadow: 0 4px 2px rgba(0, 0, 0, 0.549);
+    }
 }
 
+
 .image-collaborator {
-    margin-top: 20px;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-60%, -60%);
 }
 
 .image-collaborator-img {
@@ -25,5 +38,10 @@ ion-item.custom {
 
 ion-accordion-group {
     margin: 15px;
-    --border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.549);
+}
+
+ion-accordion {
+    border-radius: 5px;
 }

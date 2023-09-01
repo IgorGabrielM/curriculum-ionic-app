@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="medium">
+  <div *ngIf="isLoading" class="flex justify-center items-center w-full h-full">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <ion-card *ngFor="let payloadTest of payload.payload" class="h-36">
+      <ion-item>
+        <ion-thumbnail class="w-20 h-20" slot="start">
+          <ion-img class="image-collaborator-img"
+            src="https://img.freepik.com/fotos-gratis/vista-frontal-do-homem-bonito_23-2148780802.jpg"
+            alt="Imagem do colaborador"></ion-img>
+        </ion-thumbnail>
+        <div>
+          <ion-label>{{ payloadTest.sections[0].cardItems[0].data.employeeName }}</ion-label>
+          <ion-card-subtitle>{{ payloadTest.sections[0].cardItems[0].data.jobName }}</ion-card-subtitle>
+        </div>
+
+      </ion-item>
+      <div class="mx-1">
+        <ion-button (click)="navigateToCollaborator()">Perfil do Colaborador</ion-button>
+      </div>
+    </ion-card>
+
+    <ion-button (click)="reloadApp()">Atualizar app</ion-button>
+
+  </div>
+
+</ion-content>
