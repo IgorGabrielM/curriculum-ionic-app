@@ -11,35 +11,31 @@ export class CollaboratorPage implements OnInit {
   dataSubscription: Subscription
 
   sections: any
-  isLoading: boolean = true
-  data: any
+  collaborators: any[] = []
+  seeMore: boolean = false
+  isLoading: boolean = false
 
   constructor(
     private sendDataSubjectService: SendDataSubjectService,
   ) {
     this.dataSubscription = this.sendDataSubjectService.getData().subscribe((data) => {
-
-      this.data = data
-      console.log(this.data)
+      this.collaborators.push(data.payload[0].sections)
+      this.sections = data.payload[0].sections
     })
   }
 
   ngOnInit() {
-    //this.sections = data.payload[0].sections
-    //this.isLoading = false
   }
 
-  /*   loadColaborator() {
-      this.isLoading = true
-      this.collaboratorService.loadJSON().subscribe((res: any) => {
-        this.sections = res.payload[0].sections
-        console.log(this.sections)
-        this.isLoading = false
-      })
-    } */
+  loadMoreData() {
+    this.isLoading = true
+    setTimeout(() => {
+      this.collaborators.push(this.sections)
+      this.isLoading = false
+    }, 1000);
+  }
 
-  /*   ngOnDestroy() {
-      this.dataSubscription.unsubscribe();
-    }
-   */
+  ngOnDestroy() {
+    this.dataSubscription.unsubscribe();
+  }
 }

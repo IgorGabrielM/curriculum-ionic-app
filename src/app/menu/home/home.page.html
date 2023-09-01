@@ -14,15 +14,17 @@
 
   <div *ngIf="!isLoading">
     <ion-card *ngFor="let payloadTest of payload.payload" class="h-36">
-      <ion-item>
+      <ion-item color="tertiary">
         <ion-thumbnail class="w-20 h-20" slot="start">
           <ion-img class="image-collaborator-img"
             src="https://img.freepik.com/fotos-gratis/vista-frontal-do-homem-bonito_23-2148780802.jpg"
             alt="Imagem do colaborador"></ion-img>
         </ion-thumbnail>
         <div>
-          <ion-label>{{ payloadTest.sections[0].cardItems[0].data.employeeName }}</ion-label>
-          <ion-card-subtitle>{{ payloadTest.sections[0].cardItems[0].data.jobName }}</ion-card-subtitle>
+          <ion-label color="dark" class="font-bold">{{ payloadTest.sections[0].cardItems[0].data.employeeName
+            }}</ion-label>
+          <ion-card-subtitle color="medium" class="text-gray-800">{{ payloadTest.sections[0].cardItems[0].data.jobName
+            }}</ion-card-subtitle>
         </div>
 
       </ion-item>
@@ -31,7 +33,9 @@
       </div>
     </ion-card>
 
-    <ion-button (click)="reloadApp()">Atualizar app</ion-button>
+    <div class="w-full my-2 flex justify-center">
+      <ion-button (click)="reloadApp()">Atualizar app</ion-button>
+    </div>
 
   </div>
 

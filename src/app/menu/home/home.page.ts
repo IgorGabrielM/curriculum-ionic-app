@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { CollaboratorService } from 'src/app/core/services/collaborator.service';
+import { JsonStorageService } from 'src/app/core/services/json-storage.service';
 import { RandomUserService } from 'src/app/core/services/randomUser.service';
 import { SendDataSubjectService } from 'src/app/core/services/sendData.subject.service';
 
@@ -9,7 +10,7 @@ import { SendDataSubjectService } from 'src/app/core/services/sendData.subject.s
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [CollaboratorService, RandomUserService]
+  providers: [CollaboratorService, RandomUserService, JsonStorageService]
 
 })
 export class HomePage implements OnInit {
@@ -22,6 +23,7 @@ export class HomePage implements OnInit {
     private randomUserService: RandomUserService,
     private loadingCtrl: LoadingController,
     private alertController: AlertController,
+    private jsonStorageService: JsonStorageService,
 
     private router: Router
   ) { }
@@ -55,6 +57,8 @@ export class HomePage implements OnInit {
       setTimeout(async () => {
         console.log(res)
         //salvar esse dado
+        this.jsonStorageService.saveJson(res.results[0].login.username, res)
+
         const alert = await this.alertController.create({
           header: 'Atualizado',
           message: 'Aplicativo atualizado com sucesso',

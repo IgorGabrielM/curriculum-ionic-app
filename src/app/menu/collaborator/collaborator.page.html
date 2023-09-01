@@ -8,161 +8,180 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="medium">
-  <div *ngIf="isLoading" class="flex justify-center items-center w-full h-full">
-    <ion-spinner color="primary"></ion-spinner>
-  </div>
-
   <div class="content">
-    <ion-list *ngIf="!isLoading" class="bg-transparent">
-      <div class="item-collaborator">
-        <div class="image-collaborator">
-          <ion-img class="image-collaborator-img"
-            src="https://img.freepik.com/fotos-gratis/vista-frontal-do-homem-bonito_23-2148780802.jpg"
-            alt="Imagem do colaborador"></ion-img>
-        </div>
+    <ion-list class="bg-transparent">
+      <div *ngFor="let collaborator of collaborators">
 
-        <div class="item-collaborator-data mt-20 h-32 flex justify-center items-center w-full bg-gray-100  rounded-md">
-          <div class="text-black mt-2 flex flex-col justify-center items-center">
-            <ion-label class="font-bold">{{ sections[0].cardItems[0].data.employeeName }}</ion-label>
-            <ion-label>{{ sections[0].cardItems[0].data.jobName }}</ion-label>
+        <div class="item-collaborator">
+          <div class="image-collaborator">
+            <ion-img class="image-collaborator-img"
+              src="https://img.freepik.com/fotos-gratis/vista-frontal-do-homem-bonito_23-2148780802.jpg"
+              alt="Imagem do colaborador"></ion-img>
+          </div>
+
+          <div
+            class="item-collaborator-data mt-20 h-32 flex justify-center items-center w-full bg-gray-100  rounded-md">
+            <div class="text-black mt-2 flex flex-col justify-center items-center">
+              <ion-label class="font-bold">{{ collaborator[0].cardItems[0].data.employeeName }}</ion-label>
+              <ion-label>{{ collaborator[0].cardItems[0].data.jobName }}</ion-label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        <ion-accordion-group [value]="sections[0].expanded ? 'personal-data' : null">
-          <ion-accordion value="personal-data" toggleIcon="caret-down" toggleIconSlot="start">
-            <ion-item slot="header" color="light">
-              <ion-label>{{ sections[0].name }}</ion-label>
-            </ion-item>
-            <div class="ion-padding flex flex-col mx-4 mb-2" slot="content">
-              <ion-label class="text-slate-700 mt-1">Admissão na empresa</ion-label>
-              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.companyAdmissionDate
-                }}</ion-label>
-
-              <ion-label class="text-slate-700 mt-1">Data de nascimento</ion-label>
-              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.birthDate }}</ion-label>
-
-              <ion-label class="text-slate-700 mt-1">Celular</ion-label>
-              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.cellphoneNumber }}</ion-label>
-
-              <ion-label class="text-slate-700 mt-1">Email</ion-label>
-              <ion-label class="text-black font-bold">{{ sections[0].cardItems[0].data.email }}</ion-label>
-            </div>
-          </ion-accordion>
-        </ion-accordion-group>
-
-
-        <ion-accordion-group [value]="sections[1].expanded ? 'course' : null">
-          <ion-accordion value="course" toggleIcon="caret-down" toggleIconSlot="start">
-            <ion-item slot="header" color="light">
-              <ion-label>{{ sections[1].name }}</ion-label>
-            </ion-item>
-            <div *ngFor="let course of sections[1].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
-              slot="content">
-              <ion-item>
-                <div class="my-2">
-                  <ion-label class="text-slate-700 mt-1">Nome do curso</ion-label>
-                  <ion-label style="white-space: normal;" class="text-black font-bold">{{ course.courseName
-                    }}</ion-label>
-
-                  <ion-label class="text-slate-700 mt-1">Entidade</ion-label>
-                  <ion-label class="text-black font-bold">{{ course.entity }}</ion-label>
-
-                  <ion-label class="text-slate-700 mt-1">Período</ion-label>
-                  <ion-label class="text-black font-bold">{{ course.period }}</ion-label>
-                </div>
+        <div>
+          <ion-accordion-group [value]="collaborator[0].expanded ? 'personal-data' : null">
+            <ion-accordion value="personal-data" toggleIcon="caret-down" toggleIconSlot="start">
+              <ion-item slot="header" color="light">
+                <ion-label>{{ collaborator[0].name }}</ion-label>
               </ion-item>
-            </div>
-          </ion-accordion>
-        </ion-accordion-group>
+              <div class="ion-padding flex flex-col mx-4 mb-2" slot="content">
+                <ion-label class="text-slate-700 mt-1">Admissão na empresa</ion-label>
+                <ion-label class="text-black font-bold">{{ collaborator[0].cardItems[0].data.companyAdmissionDate
+                  }}</ion-label>
 
-        <ion-accordion-group [value]="sections[2].expanded ? 'academicEducation' : null">
-          <ion-accordion value="academicEducation" toggleIcon="caret-down" toggleIconSlot="start">
-            <ion-item slot="header" color="light">
-              <ion-label>{{ sections[2].name }}</ion-label>
-            </ion-item>
-            <div *ngFor="let academicEducation of sections[2].cardItems[0].data"
-              class="ion-padding flex flex-col mx-4 my-2" slot="content">
-              <ion-item>
-                <div class="my-2">
-                  <div *ngIf="academicEducation.course">
-                    <ion-label class="text-slate-700 mt-1">Curso</ion-label>
-                    <ion-label style="white-space: normal;" class="text-black font-bold">{{ academicEducation.course
+                <ion-label class="text-slate-700 mt-1">Data de nascimento</ion-label>
+                <ion-label class="text-black font-bold">{{ collaborator[0].cardItems[0].data.birthDate }}</ion-label>
+
+                <ion-label class="text-slate-700 mt-1">Celular</ion-label>
+                <ion-label class="text-black font-bold">{{ collaborator[0].cardItems[0].data.cellphoneNumber
+                  }}</ion-label>
+
+                <ion-label class="text-slate-700 mt-1">Email</ion-label>
+                <ion-label class="text-black font-bold">{{ collaborator[0].cardItems[0].data.email }}</ion-label>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+
+          <ion-accordion-group [value]="collaborator[1].expanded ? 'course' : null">
+            <ion-accordion value="course" toggleIcon="caret-down" toggleIconSlot="start">
+              <ion-item slot="header" color="light">
+                <ion-label>{{ collaborator[1].name }}</ion-label>
+              </ion-item>
+              <div *ngFor="let course of collaborator[1].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
+                slot="content">
+                <ion-item>
+                  <div class="my-2">
+                    <ion-label class="text-slate-700 mt-1">Nome do curso</ion-label>
+                    <ion-label style="white-space: normal;" class="text-black font-bold">{{ course.courseName
                       }}</ion-label>
-                  </div>
 
-                  <div *ngIf="academicEducation.educationLevel">
-                    <ion-label class="text-slate-700 mt-1">Nível</ion-label>
-                    <ion-label class="text-black font-bold">{{ academicEducation.educationLevel }}</ion-label>
-                  </div>
+                    <ion-label class="text-slate-700 mt-1">Entidade</ion-label>
+                    <ion-label class="text-black font-bold">{{ course.entity }}</ion-label>
 
-                  <div *ngIf="academicEducation.local">
-                    <ion-label class="text-slate-700 mt-1">Local</ion-label>
-                    <ion-label style="white-space: normal;" class="text-black font-bold">{{ academicEducation.local
-                      }}</ion-label>
-                  </div>
-
-                  <div *ngIf="academicEducation.period">
                     <ion-label class="text-slate-700 mt-1">Período</ion-label>
-                    <ion-label class="text-black font-bold">{{ academicEducation.period }}</ion-label>
+                    <ion-label class="text-black font-bold">{{ course.period }}</ion-label>
                   </div>
-                </div>
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+          <ion-accordion-group [value]="collaborator[2].expanded ? 'academicEducation' : null">
+            <ion-accordion value="academicEducation" toggleIcon="caret-down" toggleIconSlot="start">
+              <ion-item slot="header" color="light">
+                <ion-label>{{ collaborator[2].name }}</ion-label>
               </ion-item>
-            </div>
-          </ion-accordion>
-        </ion-accordion-group>
+              <div *ngFor="let academicEducation of collaborator[2].cardItems[0].data"
+                class="ion-padding flex flex-col mx-4 my-2" slot="content">
+                <ion-item>
+                  <div class="my-2">
+                    <div *ngIf="academicEducation.course">
+                      <ion-label class="text-slate-700 mt-1">Curso</ion-label>
+                      <ion-label style="white-space: normal;" class="text-black font-bold">{{ academicEducation.course
+                        }}</ion-label>
+                    </div>
 
-        <ion-accordion-group [value]="sections[3].expanded ? 'lenguage' : null">
-          <ion-accordion value="lenguage" toggleIcon="caret-down" toggleIconSlot="start">
-            <ion-item slot="header" color="light">
-              <ion-label>{{ sections[3].name }}</ion-label>
-            </ion-item>
-            <div *ngFor="let language of sections[3].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
-              slot="content">
-              <ion-item>
-                <div class="my-2">
-                  <ion-label class="text-slate-700 mt-1">Língua</ion-label>
-                  <ion-label class="text-black font-bold">{{ language.language }}</ion-label>
+                    <div *ngIf="academicEducation.educationLevel">
+                      <ion-label class="text-slate-700 mt-1">Nível</ion-label>
+                      <ion-label class="text-black font-bold">{{ academicEducation.educationLevel }}</ion-label>
+                    </div>
 
-                  <ion-label class="text-slate-700 mt-1">Período</ion-label>
-                  <ion-label class="text-black font-bold">{{ language.period }}</ion-label>
+                    <div *ngIf="academicEducation.local">
+                      <ion-label class="text-slate-700 mt-1">Local</ion-label>
+                      <ion-label style="white-space: normal;" class="text-black font-bold">{{ academicEducation.local
+                        }}</ion-label>
+                    </div>
 
-                  <ion-label class="text-slate-700 mt-1">Status</ion-label>
-                  <ion-label class="text-black font-bold"
-                    [color]="language.status === 'Completo' ? 'success' : 'dark'">{{
-                    language.status }}</ion-label>
-                </div>
-              </ion-item>
-            </div>
-          </ion-accordion>
-        </ion-accordion-group>
-
-        <ion-accordion-group [value]="sections[4].expanded ? 'historic' : null">
-          <ion-accordion value="historic" toggleIcon="caret-down" toggleIconSlot="start">
-            <ion-item slot="header" color="light">
-              <ion-label>{{ sections[4].name }}</ion-label>
-            </ion-item>
-            <div *ngFor="let historic of sections[4].cardItems[0].data" class="ion-padding flex flex-col mx-4 my-2"
-              slot="content">
-              <ion-item>
-                <div class="my-2">
-                  <div *ngIf="historic.company">
-                    <ion-label class="text-slate-700 mt-1">Empresa</ion-label>
-                    <ion-label class="text-black font-bold">{{ historic.company }}</ion-label>
+                    <div *ngIf="academicEducation.period">
+                      <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                      <ion-label class="text-black font-bold">{{ academicEducation.period }}</ion-label>
+                    </div>
                   </div>
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
 
-                  <ion-label class="text-slate-700 mt-1">Cargo</ion-label>
-                  <ion-label class="text-black font-bold">{{ historic.job }}</ion-label>
-
-                  <ion-label class="text-slate-700 mt-1">Período</ion-label>
-                  <ion-label class="text-black font-bold">{{
-                    historic.period }}</ion-label>
-                </div>
+          <ion-accordion-group [value]="collaborator[3].expanded ? 'lenguage' : null">
+            <ion-accordion value="lenguage" toggleIcon="caret-down" toggleIconSlot="start">
+              <ion-item slot="header" color="light">
+                <ion-label>{{ collaborator[3].name }}</ion-label>
               </ion-item>
+              <div *ngFor="let language of collaborator[3].cardItems[0].data"
+                class="ion-padding flex flex-col mx-4 my-2" slot="content">
+                <ion-item>
+                  <div class="my-2">
+                    <ion-label class="text-slate-700 mt-1">Língua</ion-label>
+                    <ion-label class="text-black font-bold">{{ language.language }}</ion-label>
+
+                    <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                    <ion-label class="text-black font-bold">{{ language.period }}</ion-label>
+
+                    <ion-label class="text-slate-700 mt-1">Status</ion-label>
+                    <ion-label class="text-black font-bold"
+                      [color]="language.status === 'Completo' ? 'success' : 'dark'">{{
+                      language.status }}</ion-label>
+                  </div>
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+          <ion-accordion-group [value]="collaborator[4].expanded ? 'historic' : null">
+            <ion-accordion value="historic" toggleIcon="caret-down" toggleIconSlot="start">
+              <ion-item slot="header" color="light">
+                <ion-label>{{ collaborator[4].name }}</ion-label>
+              </ion-item>
+              <div *ngFor="let historic of collaborator[4].cardItems[0].data"
+                class="ion-padding flex flex-col mx-4 my-2" slot="content">
+                <ion-item>
+                  <div class="my-2">
+                    <div *ngIf="historic.company">
+                      <ion-label class="text-slate-700 mt-1">Empresa</ion-label>
+                      <ion-label class="text-black font-bold">{{ historic.company }}</ion-label>
+                    </div>
+
+                    <ion-label class="text-slate-700 mt-1">Cargo</ion-label>
+                    <ion-label class="text-black font-bold">{{ historic.job }}</ion-label>
+
+                    <ion-label class="text-slate-700 mt-1">Período</ion-label>
+                    <ion-label class="text-black font-bold">{{
+                      historic.period }}</ion-label>
+                  </div>
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+
+        <div class="w-full flex justify-center mb-5">
+          <ion-button *ngIf="!isLoading" (click)="loadMoreData()" class="h-[15px]">Ver Mais</ion-button>
+
+          <ion-button *ngIf="isLoading">
+            <div>
+              <ion-spinner color="light" class="h-[15px]"></ion-spinner>
             </div>
-          </ion-accordion>
-        </ion-accordion-group>
+          </ion-button>
+
+        </div>
+
+
+
+
+        <ion-infinite-scroll>
+          <!-- <ion-infinite-scroll-content></ion-infinite-scroll-content> -->
+        </ion-infinite-scroll>
       </div>
     </ion-list>
   </div>
