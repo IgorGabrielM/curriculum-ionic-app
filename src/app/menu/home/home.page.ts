@@ -36,7 +36,6 @@ export class HomePage implements OnInit {
     this.isLoading = true
     this.collaboratorService.loadJSON().subscribe((res: any) => {
       this.payload = res
-      //console.log(this.payload.payload)
       this.isLoading = false
     })
   }
@@ -55,14 +54,12 @@ export class HomePage implements OnInit {
     loading.present();
     this.randomUserService.getRandomUser().subscribe(async (res: any) => {
       setTimeout(async () => {
-        console.log(res)
-        //salvar esse dado
         this.jsonStorageService.saveJson(res.results[0].login.username, res)
 
         const alert = await this.alertController.create({
           header: 'Atualizado',
           message: 'Aplicativo atualizado com sucesso',
-          buttons: ['OK'],
+          buttons: ['Confirmar'],
         });
         await alert.present();
       }, 1000)
