@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { CollaboratorService } from 'src/app/core/services/collaborator.service';
-import { JsonStorageService } from 'src/app/core/services/json-storage.service';
+import { IonicStorageService } from 'src/app/core/services/ionic-storage.service';
 import { RandomUserService } from 'src/app/core/services/randomUser.service';
 import { SendDataSubjectService } from 'src/app/core/services/sendData.subject.service';
 
@@ -10,33 +10,49 @@ import { SendDataSubjectService } from 'src/app/core/services/sendData.subject.s
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [CollaboratorService, RandomUserService, JsonStorageService]
+  providers: [CollaboratorService, RandomUserService, IonicStorageService]
 
 })
 export class HomePage implements OnInit {
   payload: any
   isLoading: boolean = true
+  showToast: boolean = false
+
+  data: any[] = []
 
   constructor(
-    private collaboratorService: CollaboratorService,
     private sendDataSubjectService: SendDataSubjectService,
     private randomUserService: RandomUserService,
     private loadingCtrl: LoadingController,
-    private alertController: AlertController,
-    private jsonStorageService: JsonStorageService,
+    private ionicStorageService: IonicStorageService,
 
     private router: Router
   ) { }
 
   ngOnInit() {
-    setTimeout(() => this.loadColaborator(), 5000)
+    this.ionicStorageService.createDatabase()
+    this.loadData()
   }
 
-  loadColaborator() {
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      event.target.complete();
+      this.reloadApp()
+    }, 1000);
+  }
+
+  loadData() {
     this.isLoading = true
-    this.collaboratorService.loadJSON().subscribe((res: any) => {
-      this.payload = res
-      this.isLoading = false
+    this.ionicStorageService.getData().then((res) => {
+      setTimeout(() => {
+        if (res || res.data) {
+          this.data = res.data
+          this.isLoading = false
+        } else {
+          this.data = []
+          this.isLoading = false
+        }
+      }, 1000)
     })
   }
 
@@ -45,25 +61,25 @@ export class HomePage implements OnInit {
     this.router.navigate(['/menu/home/collaborator']);
   }
 
+  clearDatabase() {
+    this.ionicStorageService.deleteData().then(async () => {
+      const loading = await this.loadingCtrl.create({
+        message: 'Apagando dados',
+        duration: 1000,
+      });
+      loading.present()
+      this.showToast = true
+      this.data = []
+    })
+  }
+
   async reloadApp() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Atualizando app',
-      duration: 1000,
-    });
-
-    loading.present();
     this.randomUserService.getRandomUser().subscribe(async (res: any) => {
-      setTimeout(async () => {
-        this.jsonStorageService.saveJson(res.results[0].login.username, res)
-
-        const alert = await this.alertController.create({
-          header: 'Atualizado',
-          message: 'Aplicativo atualizado com sucesso',
-          buttons: ['Confirmar'],
-        });
-        await alert.present();
-      }, 1000)
-
+      this.ionicStorageService.editData(res).then(() => {
+        this.ionicStorageService.getData().then((res) => {
+          this.data = res.data
+        })
+      })
     })
   }
 

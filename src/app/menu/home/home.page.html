@@ -12,31 +12,51 @@
     <ion-spinner color="primary"></ion-spinner>
   </div>
 
-  <div *ngIf="!isLoading">
-    <ion-card *ngFor="let payloadTest of payload.payload" class="h-36">
-      <ion-item color="tertiary">
-        <ion-thumbnail class="w-20 h-20" slot="start">
-          <ion-img class="image-collaborator-img"
-            src="https://img.freepik.com/fotos-gratis/vista-frontal-do-homem-bonito_23-2148780802.jpg"
-            alt="Imagem do colaborador"></ion-img>
-        </ion-thumbnail>
-        <div>
-          <ion-label color="dark" class="font-bold">{{ payloadTest.sections[0].cardItems[0].data.employeeName
-            }}</ion-label>
-          <ion-card-subtitle color="medium" class="text-gray-800">{{ payloadTest.sections[0].cardItems[0].data.jobName
-            }}</ion-card-subtitle>
-        </div>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-      </ion-item>
-      <div class="mx-1">
-        <ion-button (click)="navigateToCollaborator()">Perfil do Colaborador</ion-button>
-      </div>
-    </ion-card>
+  <div *ngIf="!isLoading">
+    <div *ngIf="data.length === 0" class="w-full flex justify-center text-xl font-bold mt-5">
+      <ion-label color="dark">Você não possui dados
+        salvos</ion-label>
+    </div>
+
+    <div *ngIf="data.length > 0">
+      <ion-card *ngFor="let user of data" class="h-fit">
+        <ion-item color="tertiary">
+          <ion-thumbnail class="w-20 h-20" slot="start">
+            <ion-img class="image-collaborator-img" [src]="user.results[0].picture.medium"
+              alt="Imagem do usuário"></ion-img>
+          </ion-thumbnail>
+          <div>
+
+            <ion-label color="dark" class="font-bold">{{ user.results[0].name.first }} {{ user.results[0].name.last
+              }}</ion-label>
+            <ion-card-subtitle class="text-gray-600">{{ user.results[0].email }}</ion-card-subtitle>
+            <ion-card-subtitle class="text-gray-600">{{ user.results[0].location.country }}/{{
+              user.results[0].location.city }} </ion-card-subtitle>
+            <ion-card-subtitle class="text-gray-600">Idade: {{ user.results[0].dob.age
+              }}</ion-card-subtitle>
+          </div>
+        </ion-item>
+      </ion-card>
+    </div>
+
+
+
 
     <div class="w-full my-2 flex justify-center">
       <ion-button (click)="reloadApp()">Atualizar app</ion-button>
+      <ion-button (click)="clearDatabase()" color="danger">
+        <ion-label color="dark">
+          Limpar banco
+        </ion-label>
+      </ion-button>
     </div>
-
   </div>
+
+  <ion-toast [isOpen]="showToast" color="success" icon="checkmark" message="Dados apagados com sucesso"
+    (didDismiss)="showToast = false" [duration]="2000"></ion-toast>
 
 </ion-content>
