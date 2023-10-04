@@ -9,10 +9,6 @@ const routes: Routes = [
     path: '',
     component: HomePage
   },
-  {
-    path: 'collaborator',
-    loadChildren: () => import('../collaborator/collaborator.module').then(m => m.CollaboratorPageModule)
-  },
 ];
 
 @NgModule({
